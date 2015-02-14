@@ -10,6 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -17,6 +24,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setLogo(R.drawable.ic_launcher);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -55,6 +68,8 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private ArrayAdapter<String> mforecastAdaper;
+
         public PlaceholderFragment() {
         }
 
@@ -67,9 +82,18 @@ public class MainActivity extends ActionBarActivity {
                     "Tommorow - Frogg - 70/40",
                     "weds - Astronoids - 48/23",
                     "Thurs - Heavy - 88/63",
-                    "Today - Sunny - 88/63"
+                    "Friday - Sunny - 88/63",
+                    "sat - HELP TARRAPED IN WORKSTATION - 50/57",
+                    "Sun  - sunyy  -  40/49"
             };
+            List <String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
 
+            mforecastAdaper = new ArrayAdapter<String>(
+                   getActivity(),R.layout.list_item_forecast,
+                   R.id.list_item_forecast_textview,weekForecast );
+
+            ListView  listView= (ListView) rootView.findViewById(R.id.listview_forecast);
+            listView.setAdapter(mforecastAdaper);
             return rootView;
         }
     }
